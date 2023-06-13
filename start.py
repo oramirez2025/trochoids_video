@@ -12,6 +12,8 @@ class trochoids(Scene):
         dubins.set_points(points)
         dubins.set_color("#3ea8f4")
         dubins.scale(0.1)
+        #dubins.stretch(4,0)
+        #dubins.stretch(0.01,1)
 
         data2 = pd.read_csv('data/Fig1_RAL_Trochoid_CSV/LSR.csv')
         x_vals2 = data2.iloc[:,0].tolist()
@@ -23,10 +25,8 @@ class trochoids(Scene):
         dubins2.rotate(-PI/5.04,about_point=dubins2.get_points()[0])
         dubins2.scale(0.1)
         dubins2.shift([-11.258346,-16.2646337,0.0])
-        print(dubins.get_points()[-1])
-        print(dubins2.get_points()[-1])
-        dubins.rotate(PI/2.99,about_point=dubins2.get_points()[0])
-        dubins2.rotate(PI/4.68,about_point=dubins2.get_points()[0])
+        dubins.rotate(PI/6,about_point=dubins2.get_points()[0])
+        dubins2.rotate(PI/20.5,about_point=dubins2.get_points()[0])
 
         start = Dot().move_to(dubins.get_points()[0])
         start.set_color("#000000")
@@ -43,7 +43,7 @@ class trochoids(Scene):
         glabel.scale(1.0)
 
 
-        self.camera.frame.set_width(30)
+        self.camera.frame.set_width(50)
         self.camera.frame.move_to(dubins.get_center())
         
         self.play(ShowCreation(start),ShowCreation(slabel),ShowCreation(goal),ShowCreation(glabel))
@@ -64,13 +64,14 @@ class trochoids(Scene):
         grid = NumberPlane(x_range=(-15, 15, 1), y_range=(-15, 15, 1),background_line_style={"stroke_width": 0.5,"stroke_opacity": 0.0})
 
         def wind_field(x, y):
-            return np.array([5.0, 7.0, 0.0])  # Define the constant wind vector [vx, vy, vz]
+            return np.array([5.0, 2.0, 0.0])  # Define the constant wind vector [vx, vy, vz]
 
-        vector_field = VectorField(wind_field, coordinate_system=grid, opacity=0.5,step_multiple=0.6,length_func=lambda norm: 4 / norm)
+        vector_field = VectorField(wind_field, coordinate_system=grid, opacity=0.25,step_multiple=1,length_func=lambda norm: 2/norm)
         vector_field.move_to(dubins.get_center())
-        vector_field.scale(1/40)
-        vector_field.set_width(40)
-        vector_field.set_height(40)
+        vector_field.set_color("#7b8f92")
+        vector_field.scale(1/80)
+        vector_field.set_width(80)
+        vector_field.set_height(80)
         self.play(ShowCreation(vector_field))
 
         #Frame 4
@@ -90,7 +91,7 @@ class trochoids(Scene):
         #Frame 6 (Show rotation) 
         self.play(Uncreate(dubins),Uncreate(slabel),Uncreate(glabel),Uncreate(mlabel),Uncreate(dubins2))
         objs = VGroup(vector_field,start,goal,svec,gvec,mvec,moved,dubins)
-        self.play(Rotate(objs,-0.90))
+        self.play(Rotate(objs,-PI/8))
 
 
         #Frame 7 (Remove vector field)
