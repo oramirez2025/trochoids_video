@@ -88,7 +88,7 @@ class SceneFileWriter(object):
             image_file = add_extension_if_not_present(scene_name, ".png")
             self.image_file_path = os.path.join(image_dir, image_file)
         if self.write_to_movie:
-            movie_dir = guarantee_existence(os.path.join(out_dir, "videos"))
+            movie_dir = guarantee_existence(os.path.join(out_dir, "logo"))
             movie_file = add_extension_if_not_present(scene_name, self.movie_file_extension)
             self.movie_file_path = os.path.join(movie_dir, movie_file)
             if self.break_into_partial_movies:

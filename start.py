@@ -19,14 +19,50 @@ class trochoids(Scene):
         x_vals2 = data2.iloc[:,0].tolist()
         y_vals2 = data2.iloc[:,1].tolist()
         points2 = [np.array([x,y,0.0]) for (x,y) in zip(x_vals2,y_vals2)]
-        dubins2 = VMobject()
-        dubins2.set_points(points2)
-        dubins2.set_color("#ff8a24")
-        dubins2.rotate(-PI/5.04,about_point=dubins2.get_points()[0])
-        dubins2.scale(0.1)
-        dubins2.shift([-11.258346,-16.2646337,0.0])
-        dubins.rotate(PI/6,about_point=dubins2.get_points()[0])
-        dubins2.rotate(PI/20.5,about_point=dubins2.get_points()[0])
+        trochoid = VMobject()
+        trochoid.set_points(points2)
+        trochoid.set_color("#79c843") 
+        trochoid.rotate(-PI/5.04,about_point=trochoid.get_points()[0])
+        trochoid.scale(0.1)
+        trochoid.shift([-11.258346,-16.2646337,0.0])
+        dubins.rotate(PI/6,about_point=trochoid.get_points()[0])
+        trochoid.rotate(PI/20.5,about_point=trochoid.get_points()[0])
+
+        data3 = pd.read_csv('data/Fig1_RAL_Trochoid_CSV/LSL.csv')
+        x_vals3 = data3.iloc[:,0].tolist()
+        y_vals3 = data3.iloc[:,1].tolist()
+        points3 = [np.array([x,y,0.0]) for (x,y) in zip(x_vals3,y_vals3)]
+        trochoid2 = VMobject()
+        trochoid2.set_points(points3)
+        trochoid2.set_color("#ff1d24")
+        trochoid2.rotate(-PI/5.04,about_point=trochoid2.get_points()[0])
+        trochoid2.scale(0.1)
+        trochoid2.shift([-11.258346,-25.9470197,0.0])
+        trochoid2.rotate(PI/20.5,about_point=trochoid2.get_points()[0])
+
+        data4 = pd.read_csv('data/Fig1_RAL_Trochoid_CSV/RSL.csv') #RSR and RSL are the same graph? 
+        x_vals4 = data4.iloc[:,0].tolist()
+        y_vals4 = data4.iloc[:,1].tolist()
+        points4 = [np.array([x,y,0.0]) for (x,y) in zip(x_vals4,y_vals4)]
+        trochoid3 = VMobject()
+        trochoid3.set_points(points4)
+        trochoid3.set_color("#ff8a24")
+        trochoid3.rotate(-PI/5.04,about_point=trochoid3.get_points()[0])
+        trochoid3.scale(0.1)
+        trochoid3.shift([-11.107606,-17.1911637,0.0])
+        trochoid3.rotate(PI/20.5,about_point=trochoid3.get_points()[0])
+
+        data5 = pd.read_csv('data/Fig1_RAL_Trochoid_CSV/RSR.csv')
+        x_vals5 = data4.iloc[:,0].tolist()
+        y_vals5 = data4.iloc[:,1].tolist()
+        points5 = [np.array([x,y,0.0]) for (x,y) in zip(x_vals5,y_vals5)]
+        trochoid4 = VMobject()
+        trochoid4.set_points(points5)
+        trochoid4.set_color("#a103fc") 
+        trochoid4.rotate(-PI/5.04,about_point=trochoid4.get_points()[0])
+        trochoid4.scale(0.1)
+        trochoid4.shift([-11.107606,-17.1911637,0.0])
+        trochoid4.rotate(PI/20.5,about_point=trochoid4.get_points()[0])
 
         start = Dot().move_to(dubins.get_points()[0])
         start.set_color("#000000")
@@ -54,8 +90,8 @@ class trochoids(Scene):
         (x0,y0,z0) = dubins.get_points()[0]
         (x1,y1,z1) = dubins.get_points()[-1]
 
-        svec = Arrow(start=[x0,y0,0],end=[x0+0.5,y0-0.40,0],buff=0,stroke_color="#000000",stroke_width=3)
-        gvec = Arrow(start=[x1,y1,0],end=[x1+0.5,y1-0.2,0],buff=0,stroke_color="#000000",stroke_width=3)
+        svec = Arrow(start=[x0,y0,0],end=[x0+0.5,y0-0.28,0],buff=0,stroke_color="#000000",stroke_width=3)
+        gvec = Arrow(start=[x1,y1,0],end=[x1+0.5,y1-0.15,0],buff=0,stroke_color="#000000",stroke_width=3)
         self.play(ShowCreation(start),ShowCreation(svec))
         self.play(ShowCreation(slabel))
         self.play(ShowCreation(goal), ShowCreation(gvec))
@@ -70,7 +106,7 @@ class trochoids(Scene):
         def wind_field(x, y):
             return np.array([5.0, 2.0, 0.0])  # Define the constant wind vector [vx, vy, vz]
 
-        vector_field = VectorField(wind_field, coordinate_system=grid, opacity=0.25,step_multiple=1,length_func=lambda norm: 2/norm)
+        vector_field = VectorField(wind_field, coordinate_system=grid, opacity=0.25,step_multiple=0.7,length_func=lambda norm: 2/norm)
         vector_field.move_to(dubins.get_center())
         vector_field.set_color("#7b8f92")
         vector_field.scale(1/80)
@@ -79,21 +115,24 @@ class trochoids(Scene):
         self.play(ShowCreation(vector_field))
 
         #Frame 3
-        moved = Dot().move_to(dubins2.get_points()[-1])
+        moved = Dot().move_to(trochoid.get_points()[-1])
         moved.set_stroke(width=1)
         moved.set_color("#000000")
         mlabel = Tex("Moved","\\,","Goal").next_to(moved, UP, buff=0.3)
         mlabel.set_color("#000000")
-        (x2,y2,z2) = dubins2.get_points()[-1]
+        (x2,y2,z2) = trochoid.get_points()[-1]
         mvec = Arrow(start=[x2,y2,0.0],end=[x2+0.5,y2-0.2,0.0],buff=0,stroke_color="#000000",stroke_width=3)
         mvec.set_color("#000000")
         mlabel.scale(1.0)
         self.play(ShowCreation(moved),ShowCreation(mlabel),ShowCreation(mvec))
-        self.play(ShowCreation(dubins2))
+        self.play(ShowCreation(trochoid))
+        self.play(ShowCreation(trochoid2))
+        self.play(ShowCreation(trochoid3))
+        #self.play(ShowCreation(trochoid4))
         self.wait()
 
         #Frame 4 (Show rotation) 
-        self.play(Uncreate(dubins),Uncreate(slabel),Uncreate(glabel),Uncreate(mlabel),Uncreate(dubins2),Uncreate(gvec), Uncreate(goal))
+        self.play(Uncreate(dubins),Uncreate(slabel),Uncreate(glabel),Uncreate(mlabel),Uncreate(trochoid),Uncreate(gvec), Uncreate(goal),Uncreate(trochoid2),Uncreate(trochoid3))
         objs = VGroup(vector_field,start,goal,svec,gvec,mvec,moved,dubins)
         self.play(Rotate(objs,-PI/8))
 
@@ -109,14 +148,14 @@ class trochoids(Scene):
         sgrid.set_fill(WHITE, opacity=0.5)
         sgrid.set_stroke(BLACK, opacity=0.8, width=1)
         sgrid.move_to(start)
-        sgrid.rotate(-PI/4)
+        sgrid.rotate(0.246505956437)
 
         ggrid.set_height(2)
         ggrid.set_width(2)
         ggrid.set_fill(WHITE, opacity=0.5)
         ggrid.set_stroke(BLACK, opacity=0.8, width=1)
         ggrid.move_to(moved)
-        ggrid.rotate(-PI/4)
+        ggrid.rotate(0.246505956437)
         dotted_line = DashedLine(start, moved, dash_length=0.1, color=BLACK)
         (x2,y2,z2) = moved.get_center()
         dotted_line2 = DashedLine(moved,[x2+10,y2,0.0], dash_length=0.1, color=BLACK)
@@ -130,6 +169,7 @@ class trochoids(Scene):
         dotr3.set_color("#fe801f")
         dotr4 = Dot([x2-14.5,y2,0.0])
         dotr4.set_color("#fe801f")
+
 
         #self.play(Uncreate(goal),Uncreate(gvec))
         self.play(ShowCreation(sgrid), ShowCreation(ggrid),ShowCreation(dotted_line))
