@@ -31,7 +31,6 @@ class trochoids(Scene):
         y_vals3 = data3.iloc[:,1].tolist()
         points3 = [np.array([x,y,0.0]) for (x,y) in zip(x_vals3,y_vals3)]
         trochoid2 = VMobject()
-        trochoid2 = DashedVMobject(trochoid2)
         trochoid2.set_points(points3)
         trochoid2.set_color("#ff1d24")
         trochoid2.rotate(-PI/5.04,about_point=trochoid2.get_points()[0])
@@ -44,7 +43,6 @@ class trochoids(Scene):
         y_vals4 = data4.iloc[:,1].tolist()
         points4 = [np.array([x,y,0.0]) for (x,y) in zip(x_vals4,y_vals4)]
         trochoid3 = VMobject()
-        trochoid3 = DashedVMobject(trochoid3)
         trochoid3.set_points(points4)
         trochoid3.set_color("#ff8a24")
         trochoid3.rotate(-PI/5.04,about_point=trochoid3.get_points()[0])
@@ -57,13 +55,10 @@ class trochoids(Scene):
         y_vals5 = data5.iloc[:,1].tolist()
         points5 = [np.array([x,y,0.0]) for (x,y) in zip(x_vals5,y_vals5)]
         trochoid4 = VMobject()
-        trochoid4 = DashedVMobject(trochoid4)
         trochoid4.set_points(points5)
         trochoid4.set_color("#a103fc") 
         trochoid4.rotate(-PI/5.04,about_point=trochoid4.get_points()[0])
         trochoid4.scale(0.1)
-        print(dubins.get_points()[0])
-        print(trochoid4.get_all_points()[0])
         trochoid4.shift([-11.107606,-7.3216472,0.0])
         trochoid4.rotate(PI/20.5,about_point=trochoid4.get_points()[0])
 
@@ -130,8 +125,8 @@ class trochoids(Scene):
         self.play(TransformFromCopy(goal,moved, run_time=3),TransformFromCopy(gvec, mvec,run_time=3),Transform(dubins,trochoid,run_time=3), Uncreate(glabel)) # 
         self.play(self.camera.frame.animate.move_to(trochoid.get_center()), Uncreate(goal), Uncreate(gvec), run_time=2)
         self.play(ShowCreation(trochoid2))
-        self.play(ShowCreation(trochoid3))
         self.play(ShowCreation(trochoid4))
+        self.play(ShowCreation(trochoid3))
         self.wait()
 
         #Frame 4 (Show rotation) 
