@@ -125,6 +125,8 @@ class trochoids(Scene):
         mvec.set_color("#000000")
         mlabel.scale(1.0)
         self.play(ShowCreation(moved),ShowCreation(mlabel),ShowCreation(mvec))
+        self.play(Uncreate(gvec), Uncreate(goal), Uncreate(dubins), Uncreate(glabel))
+        self.play(self.camera.frame.animate.move_to(trochoid.get_center()), run_time=2)
         self.play(ShowCreation(trochoid))
         self.play(ShowCreation(trochoid2))
         self.play(ShowCreation(trochoid3))
@@ -132,7 +134,7 @@ class trochoids(Scene):
         self.wait()
 
         #Frame 4 (Show rotation) 
-        self.play(Uncreate(dubins),Uncreate(slabel),Uncreate(glabel),Uncreate(mlabel),Uncreate(trochoid),Uncreate(gvec), Uncreate(goal),Uncreate(trochoid2),Uncreate(trochoid3))
+        self.play(Uncreate(slabel),Uncreate(mlabel),Uncreate(trochoid),Uncreate(trochoid2),Uncreate(trochoid3))
         objs = VGroup(vector_field,start,goal,svec,gvec,mvec,moved,dubins)
         self.play(Rotate(objs,-PI/8))
 
