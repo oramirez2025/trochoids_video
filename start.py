@@ -124,17 +124,16 @@ class trochoids(Scene):
         mvec = Arrow(start=[x2,y2,0.0],end=[x2+0.5,y2-0.2,0.0],buff=0,stroke_color="#000000",stroke_width=3)
         mvec.set_color("#000000")
         mlabel.scale(1.0)
-        self.play(ShowCreation(moved),ShowCreation(mlabel),ShowCreation(mvec))
-        self.play(Uncreate(gvec), Uncreate(goal), Uncreate(dubins), Uncreate(glabel))
-        self.play(self.camera.frame.animate.move_to(trochoid.get_center()), run_time=2)
-        self.play(ShowCreation(trochoid))
+        self.play(TransformFromCopy(goal,moved, run_time=3),TransformFromCopy(gvec, mvec,run_time=3),Transform(dubins,trochoid,run_time=3), Uncreate(glabel)) # 
+        self.play(self.camera.frame.animate.move_to(trochoid.get_center()), Uncreate(goal), Uncreate(gvec), run_time=2)
+        self.wait()
         self.play(ShowCreation(trochoid2))
         self.play(ShowCreation(trochoid3))
         #self.play(ShowCreation(trochoid4))
         self.wait()
 
         #Frame 4 (Show rotation) 
-        self.play(Uncreate(slabel),Uncreate(mlabel),Uncreate(trochoid),Uncreate(trochoid2),Uncreate(trochoid3))
+        self.play(Uncreate(slabel),Uncreate(mlabel),Uncreate(trochoid),Uncreate(trochoid2),Uncreate(trochoid3),Uncreate(dubins))
         objs = VGroup(vector_field,start,goal,svec,gvec,mvec,moved,dubins)
         self.play(Rotate(objs,-PI/8))
 
