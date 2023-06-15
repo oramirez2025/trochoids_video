@@ -35,10 +35,10 @@ class trochoids(Scene):
         trochoid2 = VMobject()
         trochoid2.set_points(points3)
         trochoid2.set_color("#ff1d24")
-        trochoid2.rotate(-PI/5.04,about_point=trochoid2.get_points()[0])
-        trochoid2.scale(0.1)
-        trochoid2.shift([-11.258346,-25.9470197,0.0])
-        trochoid2.rotate(PI/20.5,about_point=trochoid2.get_points()[0])
+        #trochoid2.rotate(-PI/5.04,about_point=trochoid2.get_points()[0])
+        #trochoid2.scale(0.1)
+        #trochoid2.shift([-11.258346,-25.9470197,0.0])
+        #trochoid2.rotate(PI/20.5,about_point=trochoid2.get_points()[0])
 
         data4 = pd.read_csv('data/Fig1_RAL_Trochoid_CSV/RSL.csv') #RSR and RSL are the same graph? 
         x_vals4 = data4.iloc[:,0].tolist()
@@ -47,10 +47,10 @@ class trochoids(Scene):
         trochoid3 = VMobject()
         trochoid3.set_points(points4)
         trochoid3.set_color("#ff8a24")
-        trochoid3.rotate(-PI/5.04,about_point=trochoid3.get_points()[0])
-        trochoid3.scale(0.1)
-        trochoid3.shift([-11.107606,-17.1911637,0.0])
-        trochoid3.rotate(PI/20.5,about_point=trochoid3.get_points()[0])
+        #trochoid3.rotate(-PI/5.04,about_point=trochoid3.get_points()[0])
+        #trochoid3.scale(0.1)
+        #trochoid3.shift([-11.107606,-17.1911637,0.0])
+        #trochoid3.rotate(PI/20.5,about_point=trochoid3.get_points()[0])
 
         data5 = pd.read_csv('data/Fig1_RAL_Trochoid_CSV/RSR.csv')
         x_vals5 = data4.iloc[:,0].tolist()
@@ -59,10 +59,10 @@ class trochoids(Scene):
         trochoid4 = VMobject()
         trochoid4.set_points(points5)
         trochoid4.set_color("#a103fc") 
-        trochoid4.rotate(-PI/5.04,about_point=trochoid4.get_points()[0])
-        trochoid4.scale(0.1)
-        trochoid4.shift([-11.107606,-17.1911637,0.0])
-        trochoid4.rotate(PI/20.5,about_point=trochoid4.get_points()[0])
+        #trochoid4.rotate(-PI/5.04,about_point=trochoid4.get_points()[0])
+        #trochoid4.scale(0.1)
+        #trochoid4.shift([-11.107606,-17.1911637,0.0])
+        #trochoid4.rotate(PI/20.5,about_point=trochoid4.get_points()[0])
 
         start = Dot().move_to(dubins.get_points()[0])
         start.set_color("#000000")
@@ -129,7 +129,7 @@ class trochoids(Scene):
         self.wait()
         self.play(ShowCreation(trochoid2))
         self.play(ShowCreation(trochoid3))
-        #self.play(ShowCreation(trochoid4))
+        self.play(ShowCreation(trochoid4))
         self.wait()
 
         #Frame 4 (Show rotation) 
@@ -170,7 +170,6 @@ class trochoids(Scene):
         dotr3.set_color("#fe801f")
         dotr4 = Dot([x2-14.5,y2,0.0])
         dotr4.set_color("#fe801f")
-
 
         #self.play(Uncreate(goal),Uncreate(gvec))
         self.play(ShowCreation(sgrid), ShowCreation(ggrid),ShowCreation(dotted_line))
