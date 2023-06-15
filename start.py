@@ -158,23 +158,27 @@ class trochoids(Scene):
         (x2,y2,z2) = moved.get_center()
         arrow_line = Arrow([x2,y2,0.0],[x2-15,y2,0.0])
         arrow_line.set_color("#000000")
-        dotted_line2 = DashedLine(arrow_line.get_start(),[x2+10,y2,0.0], dash_length=0.1, color=BLACK)
-        #dotr1 = Dot([x2-5,y2,0.0])
-        #dotr1.set_color("#fe801f")
-        #dotr2 = Dot([x2-8,y2,0.0])
-        #dotr2.set_color("#fe801f")
-        #dotr3 = Dot([x2-13,y2,0.0])
-        #dotr3.set_color("#fe801f")
-        #dotr4 = Dot([x2-14.5,y2,0.0])
-        #dotr4.set_color("#fe801f")
+        dotted_line2 = DashedLine(arrow_line.get_start(),[x2+2,y2,0.0], dash_length=0.1, color=BLACK)
+        dotr1 = Dot([x2-7.41,y2,0.0])
+        dotr1.set_color("#fe801f")
+        dotr2 = Dot([x2-8.133,y2,0.0])
+        dotr2.set_color("#fe801f")
+        dotr3 = Dot([x2-13.667,y2,0.0])
+        dotr3.set_color("#fe801f")
+        dotr4 = Dot([x2-(12.944),y2,0.0])
+        dotr4.set_color("#fe801f")
 
         self.play(ShowCreation(sgrid), ShowCreation(ggrid),ShowCreation(dotted_line))
         self.play(ShowCreation(arrow_line),ShowCreation(dotted_line2))
-        #elf.play(ShowCreation(dotr1),ShowCreation(dotr2),ShowCreation(dotr3),ShowCreation(dotr4))
+        self.play(ShowCreation(dotr1),ShowCreation(dotr2),ShowCreation(dotr3),ShowCreation(dotr4))
         dist = arrow_line.get_end() - arrow_line.get_start()
         scale_factor = ggrid.get_height() / ggrid.copy().rotate(2).get_height()
 
         def update_rotation(number_plane):
             number_plane.rotate(dotted_line.get_angle() - number_plane.get_axes()[0].get_angle())
 
+<<<<<<< HEAD
         self.play(ggrid.animate.shift(dist), UpdateFromFunc(ggrid, update_rotation), moved.animate.shift(dist), mvec.animate.shift(dist),Transform(dotted_line,DashedLine(start,[28.99969482,10.83891678,0.0],dash_length=0.04,color=BLACK)),run_time=10)
+=======
+        self.play(ggrid.animate.shift(dist), UpdateFromFunc(ggrid, update_rotation),UpdateFromFunc(sgrid,update_rotation), moved.animate.shift(dist), mvec.animate.shift(dist),Transform(dotted_line,DashedLine(start,[28.99969482,10.83891678,0.0],dash_length=0.029,color=BLACK)),run_time=10)
+>>>>>>> ec1de85 (Found four points)
