@@ -173,4 +173,8 @@ class trochoids(Scene):
         #elf.play(ShowCreation(dotr1),ShowCreation(dotr2),ShowCreation(dotr3),ShowCreation(dotr4))
         dist = arrow_line.get_end() - arrow_line.get_start()
         scale_factor = ggrid.get_height() / ggrid.copy().rotate(2).get_height()
-        self.play(ggrid.animate.shift(dist).rotate(1), moved.animate.shift(dist), mvec.animate.shift(dist),Transform(dotted_line,DashedLine(start,[28.99969482,10.83891678,0.0],dash_length=0.04,color=BLACK)),run_time=10)
+
+        def update_rotation(number_plane):
+            number_plane.rotate(dotted_line.get_angle() - number_plane.get_axes()[0].get_angle())
+
+        self.play(ggrid.animate.shift(dist), UpdateFromFunc(ggrid, update_rotation), moved.animate.shift(dist), mvec.animate.shift(dist),Transform(dotted_line,DashedLine(start,[28.99969482,10.83891678,0.0],dash_length=0.04,color=BLACK)),run_time=10)
