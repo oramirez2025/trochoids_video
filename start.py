@@ -162,11 +162,12 @@ class trochoids(Scene):
         dotr1 = Dot([x2-7.41,y2,0.0])
         dotr1.set_color("#fe801f")
         dotr2 = Dot([x2-8.133,y2,0.0])
-        dotr2.set_color("#fe801f")
-        dotr3 = Dot([x2-13.667,y2,0.0])
+        dotr2.set_color("#fe801f") 
+        dotr3 = Dot([x2-(12.944),y2,0.0])
         dotr3.set_color("#fe801f")
-        dotr4 = Dot([x2-(12.944),y2,0.0])
+        dotr4 = Dot([x2-13.667,y2,0.0])
         dotr4.set_color("#fe801f")
+        
 
         self.play(ShowCreation(sgrid), ShowCreation(ggrid),ShowCreation(dotted_line))
         self.play(ShowCreation(arrow_line),ShowCreation(dotted_line2))
@@ -177,8 +178,38 @@ class trochoids(Scene):
         def update_rotation(number_plane):
             number_plane.rotate(dotted_line.get_angle() - number_plane.get_axes()[0].get_angle())
 
-<<<<<<< HEAD
-        self.play(ggrid.animate.shift(dist), UpdateFromFunc(ggrid, update_rotation), moved.animate.shift(dist), mvec.animate.shift(dist),Transform(dotted_line,DashedLine(start,[28.99969482,10.83891678,0.0],dash_length=0.04,color=BLACK)),run_time=10)
-=======
-        self.play(ggrid.animate.shift(dist), UpdateFromFunc(ggrid, update_rotation),UpdateFromFunc(sgrid,update_rotation), moved.animate.shift(dist), mvec.animate.shift(dist),Transform(dotted_line,DashedLine(start,[28.99969482,10.83891678,0.0],dash_length=0.029,color=BLACK)),run_time=10)
->>>>>>> ec1de85 (Found four points)
+        self.play(ggrid.animate.move_to(dotr1), 
+                  UpdateFromFunc(ggrid, update_rotation),
+                  UpdateFromFunc(sgrid,update_rotation), 
+                  moved.animate.move_to(dotr1), 
+                  mvec.animate.shift(dotr1.get_center() - mvec.get_start()),
+                  Transform(dotted_line,DashedLine(start,dotr1,dash_length=0.029,color=BLACK)),
+                  run_time=3)
+        self.wait()
+        self.play(ggrid.animate.move_to(dotr2), 
+                  UpdateFromFunc(ggrid, update_rotation),
+                  UpdateFromFunc(sgrid,update_rotation), 
+                  moved.animate.move_to(dotr2), 
+                  mvec.animate.shift(dotr2.get_center() - mvec.get_start()),
+                  Transform(dotted_line,DashedLine(start,dotr2,dash_length=0.029,color=BLACK)),
+                  run_time=3)
+        self.wait()
+        self.play(ggrid.animate.move_to(dotr3), 
+                  UpdateFromFunc(ggrid, update_rotation),
+                  UpdateFromFunc(sgrid,update_rotation), 
+                  moved.animate.move_to(dotr3), 
+                  mvec.animate.shift(dotr3.get_center() - mvec.get_start()),
+                  Transform(dotted_line,DashedLine(start,dotr3,dash_length=0.029,color=BLACK)),
+                  run_time=3)
+        self.wait()
+        self.play(ggrid.animate.move_to(dotr4), 
+                  UpdateFromFunc(ggrid, update_rotation),
+                  UpdateFromFunc(sgrid,update_rotation), 
+                  moved.animate.move_to(dotr4), 
+                  mvec.animate.shift(dotr4.get_center() - mvec.get_start()),
+                  Transform(dotted_line,DashedLine(start,dotr4,dash_length=0.029,color=BLACK)),
+                  run_time=3)
+        
+
+        #Frame 6
+
