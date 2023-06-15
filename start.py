@@ -101,17 +101,17 @@ class trochoids(Scene):
         self.wait()
         
         #Frame 2
-        grid = NumberPlane(x_range=(-15, 15, 1), y_range=(-15, 15, 1),background_line_style={"stroke_width": 0.5,"stroke_opacity": 0.0})
+        grid = NumberPlane(x_range=(-5, 5, 1), y_range=(-5, 5, 1),background_line_style={"stroke_width": 0.3,"stroke_opacity": 0.0})
 
         def wind_field(x, y):
             return np.array([5.0, 2.0, 0.0])  # Define the constant wind vector [vx, vy, vz]
 
-        vector_field = VectorField(wind_field, coordinate_system=grid, opacity=0.25,step_multiple=0.7,length_func=lambda norm: 2/norm)
+        vector_field = VectorField(wind_field, coordinate_system=grid, opacity=0.2,step_multiple=0.6,length_func=lambda norm: 2/norm)
         vector_field.move_to(dubins.get_center())
         vector_field.set_color("#7b8f92")
-        vector_field.scale(1/80)
-        vector_field.set_width(80)
-        vector_field.set_height(80)
+        # vector_field.scale(1/25)
+        vector_field.set_width(40)
+        vector_field.set_height(25)
         self.play(ShowCreation(vector_field))
 
         #Frame 3
