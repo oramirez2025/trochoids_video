@@ -59,7 +59,7 @@ class trochoids(Scene):
         trochoid4.set_color("#ff931e") 
         trochoid4.rotate(-PI/5.04,about_point=trochoid4.get_points()[0])
         trochoid4.scale(0.1)
-        trochoid4.shift([-11.107606,-7.3216472,0.0])
+        trochoid4.shift([-(11.107606+0.00147259),-(7.3216472+0.18603647),0.0])
         trochoid4.rotate(PI/20.5,about_point=trochoid4.get_points()[0])
 
         start = Dot().move_to(dubins.get_points()[0])
