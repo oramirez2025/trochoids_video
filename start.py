@@ -130,7 +130,7 @@ class trochoids(Scene):
         self.wait()
 
         #Frame 4 (Show rotation) 
-        self.play(Uncreate(slabel),Uncreate(mlabel),Uncreate(trochoid),Uncreate(trochoid2),Uncreate(trochoid3),Uncreate(trochoid4),Uncreate(dubins))
+        self.play(Uncreate(slabel),Uncreate(trochoid),Uncreate(trochoid2),Uncreate(trochoid3),Uncreate(trochoid4),Uncreate(dubins))
         objs = VGroup(vector_field,start,goal,svec,gvec,mvec,moved,dubins)
         self.play(Rotate(objs,-PI/8))
 
