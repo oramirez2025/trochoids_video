@@ -8,18 +8,18 @@ class trochoids(Scene):
         x_vals = data.iloc[:,0].tolist()
         y_vals = data.iloc[:,1].tolist()
         points = [np.array([x,y,0.0]) for (x,y) in zip(x_vals,y_vals)]
-        dubins = VMobject()
-        dubins.set_points(points)
-        dubins.set_color("#3ea8f4")
+        dubins = Line()
+        dubins.set_points_smoothly(points)
+        dubins.set_color("#3FA9F5")
         dubins.scale(0.1)
 
         data2 = pd.read_csv('data/Fig1_RAL_Trochoid_CSV/LSR.csv')
         x_vals2 = data2.iloc[:,0].tolist()
         y_vals2 = data2.iloc[:,1].tolist()
         points2 = [np.array([x,y,0.0]) for (x,y) in zip(x_vals2,y_vals2)]
-        trochoid = VMobject()
-        trochoid.set_points(points2)
-        trochoid.set_color("#79c843") 
+        trochoid = Line()
+        trochoid.set_points_smoothly(points2)
+        trochoid.set_color("#3FA9F5") #79c843
         trochoid.rotate(-PI/5.04,about_point=trochoid.get_points()[0])
         trochoid.scale(0.1)
         trochoid.shift([-11.258346,-16.2646337,0.0])
@@ -30,9 +30,9 @@ class trochoids(Scene):
         x_vals3 = data3.iloc[:,0].tolist()
         y_vals3 = data3.iloc[:,1].tolist()
         points3 = [np.array([x,y,0.0]) for (x,y) in zip(x_vals3,y_vals3)]
-        trochoid2 = VMobject()
-        trochoid2.set_points(points3)
-        trochoid2.set_color("#ff1d24")
+        trochoid2 = Line()
+        trochoid2.set_points_smoothly(points3)
+        trochoid2.set_color("#7bc943") #ff1d24
         trochoid2.rotate(-PI/5.04,about_point=trochoid2.get_points()[0])
         trochoid2.scale(0.1)
         trochoid2.shift([-11.258346,-25.9470197,0.0])
@@ -42,9 +42,9 @@ class trochoids(Scene):
         x_vals4 = data4.iloc[:,0].tolist()
         y_vals4 = data4.iloc[:,1].tolist()
         points4 = [np.array([x,y,0.0]) for (x,y) in zip(x_vals4,y_vals4)]
-        trochoid3 = VMobject()
-        trochoid3.set_points(points4)
-        trochoid3.set_color("#ff8a24")
+        trochoid3 = Line()
+        trochoid3.set_points_smoothly(points4)
+        trochoid3.set_color("#ff1d25")
         trochoid3.rotate(-PI/5.04,about_point=trochoid3.get_points()[0])
         trochoid3.scale(0.1)
         trochoid3.shift([-11.107606,-17.1911637,0.0])
@@ -54,9 +54,9 @@ class trochoids(Scene):
         x_vals5 = data5.iloc[:,0].tolist()
         y_vals5 = data5.iloc[:,1].tolist()
         points5 = [np.array([x,y,0.0]) for (x,y) in zip(x_vals5,y_vals5)]
-        trochoid4 = VMobject()
-        trochoid4.set_points(points5)
-        trochoid4.set_color("#a103fc") 
+        trochoid4 = Line()
+        trochoid4.set_points_smoothly(points5)
+        trochoid4.set_color("#ff931e") 
         trochoid4.rotate(-PI/5.04,about_point=trochoid4.get_points()[0])
         trochoid4.scale(0.1)
         trochoid4.shift([-11.107606,-7.3216472,0.0])
