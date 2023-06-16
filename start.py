@@ -410,7 +410,5 @@ class trochoids(Scene):
         (xt2,yt2,zt2) = trochoid3_temp.get_points()[0]
         trochoid3_temp.shift([xt-xt2,yt-yt2,0.0])
         trochoid3_temp.rotate(PI/8,about_point=trochoid3_temp.get_points()[0])
-        #trochoid3_temp.rotate()
         goal_shift = dotr1.get_center() - ur_background_goal_pivot
-        rate_func1 = linear
-        self.play(ShowCreation(trochoid3_temp),moved.animate.shift(goal_shift),mvec.animate.shift(goal_shift),run_time=1+0.5+0.5,rate_func=lambda t: rate_func1(t * run_time2 / run_time1))
+        self.play(ShowCreation(trochoid3_temp),moved.animate.shift(goal_shift),mvec.animate.shift(goal_shift),run_time=2)
