@@ -304,7 +304,8 @@ class trochoids(Scene):
                     mvec.animate.shift(dotr1.get_center() - mvec.get_start()),
                     Transform(dotted_line,DashedLine(start,dotr1,dash_length=0.029,color=BLACK)),
                     run_time=3)
-        self.play(ShowCreation(dotr1))
+        dotted_liner1 = DashedLine(start, dotr1, dash_length=0.1, color="#fe801f")
+        self.play(ShowCreation(dotr1), ShowCreation(dotted_liner1))
         self.wait()
 
         a44_label = Tex("a_{44}", color=BLACK).set_color_by_tex("4", '#3FA9F5')
@@ -331,7 +332,8 @@ class trochoids(Scene):
                     mvec.animate.shift(dotr2.get_center() - mvec.get_start()),
                     Transform(dotted_line,DashedLine(start,dotr2,dash_length=0.029,color=BLACK)),
                     run_time=3)
-        self.play(ShowCreation(dotr2))
+        dotted_liner2 = DashedLine(start, dotr2, dash_length=0.1, color="#fe801f")
+        self.play(ShowCreation(dotr2),ShowCreation(dotted_liner2))
         self.wait()
 
         a34_label = Tex("a_{34}", color=BLACK).set_color_by_tex("4", '#3FA9F5').set_color_by_tex("3", '#ff1d25')
@@ -358,7 +360,8 @@ class trochoids(Scene):
                     mvec.animate.shift(dotr3.get_center() - mvec.get_start()),
                     Transform(dotted_line,DashedLine(start,dotr3,dash_length=0.029,color=BLACK)),
                     run_time=3)
-        self.play(ShowCreation(dotr3))
+        dotted_liner3 = DashedLine(start, dotr3, dash_length=0.1, color="#fe801f")
+        self.play(ShowCreation(dotr3),ShowCreation(dotted_liner3))
         self.wait()
 
         a33_label = Tex("a_{33}", color=BLACK).set_color_by_tex("3", '#ff1d25')
@@ -385,7 +388,8 @@ class trochoids(Scene):
                     mvec.animate.shift(dotr4.get_center() - mvec.get_start()),
                     Transform(dotted_line,DashedLine(start,dotr4,dash_length=0.029,color=BLACK)),
                     run_time=3)
-        self.play(ShowCreation(dotr4))
+        dotted_liner4 = DashedLine(start, dotr4, dash_length=0.1, color="#fe801f")
+        self.play(ShowCreation(dotr4), ShowCreation(dotted_liner4))
         self.wait()
 
         a23_label = Tex("a_{23}", color=BLACK).set_color_by_tex("3", '#ff1d25').set_color_by_tex("2", '#ff931e')
