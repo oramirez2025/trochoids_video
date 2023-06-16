@@ -56,7 +56,13 @@ class trochoids(Scene):
         x_vals = data.iloc[:,0].tolist()
         y_vals = data.iloc[:,1].tolist()
         points = [np.array([x,y,0.0]) for (x,y) in zip(x_vals,y_vals)]
+<<<<<<< HEAD
         dubins = Line().set_points_smoothly(points).set_color("#3FA9F5")
+=======
+        dubins = Line()
+        dubins.set_points_smoothly(points)
+        dubins.set_color("#3FA9F5")
+>>>>>>> ec1de85 (Found four points)
         dubins.scale(0.1)
         dubins.z_index = 0
 
@@ -64,7 +70,13 @@ class trochoids(Scene):
         x_vals2 = data2.iloc[:,0].tolist()
         y_vals2 = data2.iloc[:,1].tolist()
         points2 = [np.array([x,y,0.0]) for (x,y) in zip(x_vals2,y_vals2)]
+<<<<<<< HEAD
         trochoid = Line().set_points_smoothly(points2).set_color("#3FA9F5")
+=======
+        trochoid = Line()
+        trochoid.set_points_smoothly(points2)
+        trochoid.set_color("#3FA9F5") #79c843
+>>>>>>> ec1de85 (Found four points)
         trochoid.rotate(-PI/5.04,about_point=trochoid.get_points()[0])
         trochoid.scale(0.1)
         trochoid.shift([-11.258346,-16.2646337,0.0])
@@ -75,7 +87,13 @@ class trochoids(Scene):
         x_vals3 = data3.iloc[:,0].tolist()
         y_vals3 = data3.iloc[:,1].tolist()
         points3 = [np.array([x,y,0.0]) for (x,y) in zip(x_vals3,y_vals3)]
+<<<<<<< HEAD
         trochoid2 = Line().set_points_smoothly(points3).set_color("#7bc943")
+=======
+        trochoid2 = Line()
+        trochoid2.set_points_smoothly(points3)
+        trochoid2.set_color("#7bc943") #ff1d24
+>>>>>>> ec1de85 (Found four points)
         trochoid2.rotate(-PI/5.04,about_point=trochoid2.get_points()[0])
         trochoid2.scale(0.1)
         trochoid2.shift([-11.258346,-25.9470197,0.0])
@@ -85,7 +103,13 @@ class trochoids(Scene):
         x_vals4 = data4.iloc[:,0].tolist()
         y_vals4 = data4.iloc[:,1].tolist()
         points4 = [np.array([x,y,0.0]) for (x,y) in zip(x_vals4,y_vals4)]
+<<<<<<< HEAD
         trochoid3 = Line().set_points_smoothly(points4).set_color("#ff1d25")
+=======
+        trochoid3 = Line()
+        trochoid3.set_points_smoothly(points4)
+        trochoid3.set_color("#ff1d25")
+>>>>>>> ec1de85 (Found four points)
         trochoid3.rotate(-PI/5.04,about_point=trochoid3.get_points()[0])
         trochoid3.scale(0.1)
         trochoid3.shift([-11.107606,-17.1911637,0.0])
@@ -95,7 +119,13 @@ class trochoids(Scene):
         x_vals5 = data5.iloc[:,0].tolist()
         y_vals5 = data5.iloc[:,1].tolist()
         points5 = [np.array([x,y,0.0]) for (x,y) in zip(x_vals5,y_vals5)]
+<<<<<<< HEAD
         trochoid4 = Line().set_points_smoothly(points5).set_color("#ff931e") 
+=======
+        trochoid4 = Line()
+        trochoid4.set_points_smoothly(points5)
+        trochoid4.set_color("#ff931e") 
+>>>>>>> ec1de85 (Found four points)
         trochoid4.rotate(-PI/5.04,about_point=trochoid4.get_points()[0])
         trochoid4.scale(0.1)
         trochoid4.shift([-(11.107606),-(7.3216472),0.0])
@@ -243,6 +273,7 @@ class trochoids(Scene):
         arrow_line = Arrow([x2,y2,0.0],[x2-15,y2,0.0])
         arrow_line.set_color("#000000")
         dotted_line2 = DashedLine(arrow_line.get_start(),[x2+2,y2,0.0], dash_length=0.1, color=BLACK)
+<<<<<<< HEAD
         dotr1 = Dot([x2-7.41,y2,0.0]).set_color("#fe801f")
         dotr2 = Dot([x2-8.133,y2,0.0]).set_color("#fe801f")
         dotr3 = Dot([x2-(12.944),y2,0.0]).set_color("#fe801f")
@@ -278,12 +309,27 @@ class trochoids(Scene):
                     ShowCreation(ll_background_goal),
                     ShowCreation(lr_background_goal))
         self.play(ShowCreation(arrow_line),ShowCreation(dotted_line2))
+=======
+        dotr1 = Dot([x2-7.41,y2,0.0])
+        dotr1.set_color("#fe801f")
+        dotr2 = Dot([x2-8.133,y2,0.0])
+        dotr2.set_color("#fe801f")
+        dotr3 = Dot([x2-13.667,y2,0.0])
+        dotr3.set_color("#fe801f")
+        dotr4 = Dot([x2-(12.944),y2,0.0])
+        dotr4.set_color("#fe801f")
+
+        self.play(ShowCreation(sgrid), ShowCreation(ggrid),ShowCreation(dotted_line))
+        self.play(ShowCreation(arrow_line),ShowCreation(dotted_line2))
+        self.play(ShowCreation(dotr1),ShowCreation(dotr2),ShowCreation(dotr3),ShowCreation(dotr4))
+>>>>>>> ec1de85 (Found four points)
         dist = arrow_line.get_end() - arrow_line.get_start()
         scale_factor = ggrid.get_height() / ggrid.copy().rotate(2).get_height()
 
         def update_rotation(number_plane):
             number_plane.rotate(dotted_line.get_angle() - number_plane.get_axes()[0].get_angle())
 
+<<<<<<< HEAD
         goal_shift = dotr1.get_center() - ur_background_goal_pivot
         self.play(ggrid.animate.move_to(dotr1), 
                     ur_background_goal.animate.shift(goal_shift),
@@ -402,3 +448,6 @@ class trochoids(Scene):
 
         #Frame 6
 
+=======
+        self.play(ggrid.animate.shift(dist), UpdateFromFunc(ggrid, update_rotation),UpdateFromFunc(sgrid,update_rotation), moved.animate.shift(dist), mvec.animate.shift(dist),Transform(dotted_line,DashedLine(start,[28.99969482,10.83891678,0.0],dash_length=0.029,color=BLACK)),run_time=10)
+>>>>>>> ec1de85 (Found four points)
