@@ -209,6 +209,17 @@ class trochoids(Scene):
         ul_background.move_to(sgrid.get_center()+[-sgrid.get_width()*.2,sgrid.get_height()*.2,0])
         ul_background.rotate(sgrid.get_axes()[0].get_angle(), about_point=ul_background.get_corner(DR))
 
+        ll_background = Rectangle(
+            width=sgrid.get_width()*.4,
+            height=sgrid.get_height()*.4,
+            fill_color='#ff1d25',
+            fill_opacity=0.2,
+            stroke_width=0,  # Remove the border
+        )
+        ll_background_goal = ll_background.copy()
+        ll_background.move_to(sgrid.get_center()+[-sgrid.get_width()*.2,-sgrid.get_height()*.2,0])
+        ll_background.rotate(sgrid.get_axes()[0].get_angle(), about_point=ll_background.get_corner(UR))
+
 
 
         ggrid.set_height(2).set_width(2).set_fill(WHITE, opacity=0.5)
@@ -232,6 +243,10 @@ class trochoids(Scene):
         ul_background_goal.move_to(ggrid.get_center()+[-ggrid.get_width()*.2,ggrid.get_height()*.2,0])
         ul_background_goal_pivot = ul_background_goal.get_corner(DR)
         ul_background_goal.rotate(ggrid.get_axes()[0].get_angle(), about_point=ul_background_goal_pivot)
+
+        ll_background_goal.move_to(ggrid.get_center()+[-ggrid.get_width()*.2,-ggrid.get_height()*.2,0])
+        ll_background_goal_pivot = ll_background_goal.get_corner(UR)
+        ll_background_goal.rotate(ggrid.get_axes()[0].get_angle(), about_point=ll_background_goal_pivot)
         
         
 
@@ -240,8 +255,10 @@ class trochoids(Scene):
                   ShowCreation(dotted_line),
                   ShowCreation(ur_background),
                   ShowCreation(ul_background),
+                  ShowCreation(ll_background),
                   ShowCreation(ur_background_goal),
-                  ShowCreation(ul_background_goal))
+                  ShowCreation(ul_background_goal),
+                  ShowCreation(ll_background_goal))
         self.play(ShowCreation(arrow_line),ShowCreation(dotted_line2))
         self.play(ShowCreation(dotr1),ShowCreation(dotr2),ShowCreation(dotr3),ShowCreation(dotr4))
         dist = arrow_line.get_end() - arrow_line.get_start()
@@ -254,10 +271,13 @@ class trochoids(Scene):
         self.play(ggrid.animate.move_to(dotr1), 
                   ur_background_goal.animate.shift(goal_shift),
                   ul_background_goal.animate.shift(goal_shift),
+                  ll_background_goal.animate.shift(goal_shift),
                   UpdateFromFunc(ur_background, lambda obj: ur_update_rect_rotation(obj, dotted_line)),
                   UpdateFromFunc(ul_background, lambda obj: ul_update_rect_rotation(obj, dotted_line)),
+                  UpdateFromFunc(ll_background, lambda obj: ll_update_rect_rotation(obj, dotted_line)),
                   UpdateFromFunc(ur_background_goal, lambda obj: ur_update_rect_rotation(obj, dotted_line)),
                   UpdateFromFunc(ul_background_goal, lambda obj: ul_update_rect_rotation(obj, dotted_line)),
+                  UpdateFromFunc(ll_background_goal, lambda obj: ll_update_rect_rotation(obj, dotted_line)),
                   UpdateFromFunc(ggrid, update_rotation),
                   UpdateFromFunc(sgrid,update_rotation), 
                   moved.animate.move_to(dotr1), 
@@ -267,48 +287,57 @@ class trochoids(Scene):
         self.wait()
         goal_shift = dotr2.get_center() - dotr1.get_center()
         self.play(ggrid.animate.move_to(dotr2),
-                  ur_background_goal.animate.shift(goal_shift),
-                  ul_background_goal.animate.shift(goal_shift), 
-                  UpdateFromFunc(ur_background, lambda obj: ur_update_rect_rotation(obj, dotted_line)),
-                  UpdateFromFunc(ul_background, lambda obj: ul_update_rect_rotation(obj, dotted_line)),
-                  UpdateFromFunc(ur_background_goal, lambda obj: ur_update_rect_rotation(obj, dotted_line)),
-                  UpdateFromFunc(ul_background_goal, lambda obj: ul_update_rect_rotation(obj, dotted_line)),
-                  UpdateFromFunc(ggrid, update_rotation),
-                  UpdateFromFunc(sgrid,update_rotation), 
-                  moved.animate.move_to(dotr2), 
-                  mvec.animate.shift(dotr2.get_center() - mvec.get_start()),
-                  Transform(dotted_line,DashedLine(start,dotr2,dash_length=0.029,color=BLACK)),
-                  run_time=3)
+                    ur_background_goal.animate.shift(goal_shift),
+                    ul_background_goal.animate.shift(goal_shift),
+                    ll_background_goal.animate.shift(goal_shift), 
+                    UpdateFromFunc(ur_background, lambda obj: ur_update_rect_rotation(obj, dotted_line)),
+                    UpdateFromFunc(ul_background, lambda obj: ul_update_rect_rotation(obj, dotted_line)),
+                    UpdateFromFunc(ll_background, lambda obj: ll_update_rect_rotation(obj, dotted_line)),
+                    UpdateFromFunc(ur_background_goal, lambda obj: ur_update_rect_rotation(obj, dotted_line)),
+                    UpdateFromFunc(ul_background_goal, lambda obj: ul_update_rect_rotation(obj, dotted_line)),
+                    UpdateFromFunc(ll_background_goal, lambda obj: ll_update_rect_rotation(obj, dotted_line)),
+                    UpdateFromFunc(ggrid, update_rotation),
+                    UpdateFromFunc(sgrid,update_rotation), 
+                    moved.animate.move_to(dotr2), 
+                    mvec.animate.shift(dotr2.get_center() - mvec.get_start()),
+                    Transform(dotted_line,DashedLine(start,dotr2,dash_length=0.029,color=BLACK)),
+                    run_time=3)
         self.wait()
         goal_shift = dotr3.get_center() - dotr2.get_center()
         self.play(ggrid.animate.move_to(dotr3),
-                  ur_background_goal.animate.shift(goal_shift),
-                  ul_background_goal.animate.shift(goal_shift), 
-                  UpdateFromFunc(ur_background, lambda obj: ur_update_rect_rotation(obj, dotted_line)),
-                  UpdateFromFunc(ul_background, lambda obj: ul_update_rect_rotation(obj, dotted_line)),
-                  UpdateFromFunc(ur_background_goal, lambda obj: ur_update_rect_rotation(obj, dotted_line)),
-                  UpdateFromFunc(ul_background_goal, lambda obj: ul_update_rect_rotation(obj, dotted_line)),
-                  UpdateFromFunc(ggrid, update_rotation),
-                  UpdateFromFunc(sgrid,update_rotation), 
-                  moved.animate.move_to(dotr3), 
-                  mvec.animate.shift(dotr3.get_center() - mvec.get_start()),
-                  Transform(dotted_line,DashedLine(start,dotr3,dash_length=0.029,color=BLACK)),
-                  run_time=3)
+                    ur_background_goal.animate.shift(goal_shift),
+                    ul_background_goal.animate.shift(goal_shift), 
+                    ll_background_goal.animate.shift(goal_shift),
+                    UpdateFromFunc(ur_background, lambda obj: ur_update_rect_rotation(obj, dotted_line)),
+                    UpdateFromFunc(ul_background, lambda obj: ul_update_rect_rotation(obj, dotted_line)),
+                    UpdateFromFunc(ll_background, lambda obj: ll_update_rect_rotation(obj, dotted_line)),
+                    UpdateFromFunc(ur_background_goal, lambda obj: ur_update_rect_rotation(obj, dotted_line)),
+                    UpdateFromFunc(ul_background_goal, lambda obj: ul_update_rect_rotation(obj, dotted_line)),
+                    UpdateFromFunc(ll_background_goal, lambda obj: ll_update_rect_rotation(obj, dotted_line)),
+                    UpdateFromFunc(ggrid, update_rotation),
+                    UpdateFromFunc(sgrid,update_rotation), 
+                    moved.animate.move_to(dotr3), 
+                    mvec.animate.shift(dotr3.get_center() - mvec.get_start()),
+                    Transform(dotted_line,DashedLine(start,dotr3,dash_length=0.029,color=BLACK)),
+                    run_time=3)
         self.wait()
         goal_shift = dotr4.get_center() - dotr3.get_center()
         self.play(ggrid.animate.move_to(dotr4),
-                  ur_background_goal.animate.shift(goal_shift),
-                  ul_background_goal.animate.shift(goal_shift), 
-                  UpdateFromFunc(ur_background, lambda obj: ur_update_rect_rotation(obj, dotted_line)),
-                  UpdateFromFunc(ul_background, lambda obj: ul_update_rect_rotation(obj, dotted_line)),
-                  UpdateFromFunc(ur_background_goal, lambda obj: ur_update_rect_rotation(obj, dotted_line)),
-                  UpdateFromFunc(ul_background_goal, lambda obj: ul_update_rect_rotation(obj, dotted_line)),
-                  UpdateFromFunc(ggrid, update_rotation),
-                  UpdateFromFunc(sgrid,update_rotation), 
-                  moved.animate.move_to(dotr4), 
-                  mvec.animate.shift(dotr4.get_center() - mvec.get_start()),
-                  Transform(dotted_line,DashedLine(start,dotr4,dash_length=0.029,color=BLACK)),
-                  run_time=3)
+                    ur_background_goal.animate.shift(goal_shift),
+                    ul_background_goal.animate.shift(goal_shift), 
+                    ll_background_goal.animate.shift(goal_shift),
+                    UpdateFromFunc(ur_background, lambda obj: ur_update_rect_rotation(obj, dotted_line)),
+                    UpdateFromFunc(ul_background, lambda obj: ul_update_rect_rotation(obj, dotted_line)),
+                    UpdateFromFunc(ll_background, lambda obj: ll_update_rect_rotation(obj, dotted_line)),
+                    UpdateFromFunc(ur_background_goal, lambda obj: ur_update_rect_rotation(obj, dotted_line)),
+                    UpdateFromFunc(ul_background_goal, lambda obj: ul_update_rect_rotation(obj, dotted_line)),
+                    UpdateFromFunc(ll_background_goal, lambda obj: ll_update_rect_rotation(obj, dotted_line)),
+                    UpdateFromFunc(ggrid, update_rotation),
+                    UpdateFromFunc(sgrid,update_rotation), 
+                    moved.animate.move_to(dotr4), 
+                    mvec.animate.shift(dotr4.get_center() - mvec.get_start()),
+                    Transform(dotted_line,DashedLine(start,dotr4,dash_length=0.029,color=BLACK)),
+                    run_time=3)
         
 
         #Frame 6
