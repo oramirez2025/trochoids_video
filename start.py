@@ -279,7 +279,6 @@ class trochoids(Scene):
                     ShowCreation(ll_background_goal),
                     ShowCreation(lr_background_goal))
         self.play(ShowCreation(arrow_line),ShowCreation(dotted_line2))
-        self.play(ShowCreation(dotr1),ShowCreation(dotr2),ShowCreation(dotr3),ShowCreation(dotr4))
         dist = arrow_line.get_end() - arrow_line.get_start()
         scale_factor = ggrid.get_height() / ggrid.copy().rotate(2).get_height()
 
@@ -306,6 +305,7 @@ class trochoids(Scene):
                     mvec.animate.shift(dotr1.get_center() - mvec.get_start()),
                     Transform(dotted_line,DashedLine(start,dotr1,dash_length=0.029,color=BLACK)),
                     run_time=3)
+        self.play(ShowCreation(dotr1))
         self.wait()
         goal_shift = dotr2.get_center() - dotr1.get_center()
         self.play(ggrid.animate.move_to(dotr2),
@@ -327,6 +327,7 @@ class trochoids(Scene):
                     mvec.animate.shift(dotr2.get_center() - mvec.get_start()),
                     Transform(dotted_line,DashedLine(start,dotr2,dash_length=0.029,color=BLACK)),
                     run_time=3)
+        self.play(ShowCreation(dotr2))
         self.wait()
         goal_shift = dotr3.get_center() - dotr2.get_center()
         self.play(ggrid.animate.move_to(dotr3),
@@ -348,6 +349,7 @@ class trochoids(Scene):
                     mvec.animate.shift(dotr3.get_center() - mvec.get_start()),
                     Transform(dotted_line,DashedLine(start,dotr3,dash_length=0.029,color=BLACK)),
                     run_time=3)
+        self.play(ShowCreation(dotr3))
         self.wait()
         goal_shift = dotr4.get_center() - dotr3.get_center()
         self.play(ggrid.animate.move_to(dotr4),
@@ -369,7 +371,8 @@ class trochoids(Scene):
                     mvec.animate.shift(dotr4.get_center() - mvec.get_start()),
                     Transform(dotted_line,DashedLine(start,dotr4,dash_length=0.029,color=BLACK)),
                     run_time=3)
-        
+        self.play(ShowCreation(dotr4))
+        self.wait()
 
         #Frame 6
 
