@@ -240,9 +240,10 @@ class trochoids(Scene):
 
         dotted_line = DashedLine(start, moved, dash_length=0.1, color=BLACK)
         (x2,y2,z2) = moved.get_center()
-        arrow_line = Arrow([x2,y2,0.0],[x2-15,y2,0.0])
-        arrow_line.set_color("#000000")
-        dotted_line2 = DashedLine(arrow_line.get_start(),[x2+2,y2,0.0], dash_length=0.1, color=BLACK)
+        arrow_line = Arrow([x2+.4,y2,0.0],[x2-15,y2,0.0]).set_color(BLACK)
+        start_line = Line([x2,y2-.25,0.0],[x2,y2+.25,0.0]).set_color(BLACK)
+
+        dotted_line2 = DashedLine([x2,y2,0.0],[x2+2,y2,0.0], dash_length=0.1, color=BLACK)
         dotr1 = Dot([x2-7.41,y2,0.0]).set_color("#fe801f")
         dotr2 = Dot([x2-8.133,y2,0.0]).set_color("#fe801f")
         dotr3 = Dot([x2-(12.944),y2,0.0]).set_color("#fe801f")
@@ -277,9 +278,7 @@ class trochoids(Scene):
                     ShowCreation(ul_background_goal),
                     ShowCreation(ll_background_goal),
                     ShowCreation(lr_background_goal))
-        self.play(ShowCreation(arrow_line),ShowCreation(dotted_line2))
-        dist = arrow_line.get_end() - arrow_line.get_start()
-        scale_factor = ggrid.get_height() / ggrid.copy().rotate(2).get_height()
+        self.play(ShowCreation(dotted_line2), ShowCreation(arrow_line), ShowCreation(start_line))
 
         def update_rotation(number_plane):
             number_plane.rotate(dotted_line.get_angle() - number_plane.get_axes()[0].get_angle())
