@@ -105,16 +105,15 @@ class trochoids(Scene):
         start.z_index = 5
         start.set_color("#000000")
         start.set_stroke(width=1)
-        slabel = Tex("Start").next_to(start, direction=np.array([-1., 1., 0.]), buff=0.25)
-        slabel.set_color("#000000")
+        slabel = Tex("Start", color=BLACK)
+        slabel.next_to(start, direction=np.array([-1., 1., 0.]), buff=0.25)
         slabel.scale(1.0)
 
         goal = Dot().move_to(dubins.get_points()[-1])
         goal.set_color("#000000")
         goal.z_index = 1
         goal.set_stroke(width=1)
-        glabel = Tex("Goal").next_to(goal, direction=np.array([-1., 1., 0.]), buff=0.25)
-        glabel.set_color("#000000")
+        glabel = Tex("Goal", color=BLACK).next_to(goal, direction=np.array([-1., 1., 0.]), buff=0.25)
         glabel.scale(1.0)
 
 
@@ -307,6 +306,11 @@ class trochoids(Scene):
                     run_time=3)
         self.play(ShowCreation(dotr1))
         self.wait()
+
+        a44_label = Tex("a_{44}", color=BLACK).set_color_by_tex("4", '#3FA9F5')
+        a44_label.move_to((dotr1.get_center()+ur_background_goal_pivot)/2.0 + [0.0,0.5,0.0]) 
+        self.play(Write(a44_label))
+
         goal_shift = dotr2.get_center() - dotr1.get_center()
         self.play(ggrid.animate.move_to(dotr2),
                     ur_background_goal.animate.shift(goal_shift),
@@ -329,6 +333,11 @@ class trochoids(Scene):
                     run_time=3)
         self.play(ShowCreation(dotr2))
         self.wait()
+
+        a34_label = Tex("a_{34}", color=BLACK).set_color_by_tex("4", '#3FA9F5').set_color_by_tex("3", '#ff1d25')
+        a34_label.move_to((dotr1.get_center()+dotr2.get_center())/2.0 + [0.0,0.5,0.0]) 
+        self.play(Write(a34_label))
+
         goal_shift = dotr3.get_center() - dotr2.get_center()
         self.play(ggrid.animate.move_to(dotr3),
                     ur_background_goal.animate.shift(goal_shift),
@@ -351,6 +360,11 @@ class trochoids(Scene):
                     run_time=3)
         self.play(ShowCreation(dotr3))
         self.wait()
+
+        a33_label = Tex("a_{33}", color=BLACK).set_color_by_tex("3", '#ff1d25')
+        a33_label.move_to((dotr3.get_center()+dotr2.get_center())/2.0 + [0.0,0.5,0.0]) 
+        self.play(Write(a33_label))
+
         goal_shift = dotr4.get_center() - dotr3.get_center()
         self.play(ggrid.animate.move_to(dotr4),
                     ur_background_goal.animate.shift(goal_shift),
@@ -373,6 +387,14 @@ class trochoids(Scene):
                     run_time=3)
         self.play(ShowCreation(dotr4))
         self.wait()
+
+        a23_label = Tex("a_{23}", color=BLACK).set_color_by_tex("3", '#ff1d25').set_color_by_tex("2", '#ff931e')
+        a23_label.move_to((dotr3.get_center()+dotr4.get_center())/2.0 + [0.0,0.5,0.0]) 
+        self.play(Write(a23_label)) 
+
+        a22_label = Tex("a_{22}", color=BLACK).set_color_by_tex("2", '#ff931e')
+        a22_label.move_to((arrow_line.get_end()+dotr4.get_center())/2.0 + [0.0,0.5,0.0]) 
+        self.play(Write(a22_label))
 
         #Frame 6
 
