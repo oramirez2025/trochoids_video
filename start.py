@@ -26,6 +26,18 @@ def ul_update_rect_rotation(rect, dotted_line):
     angle = edge.get_angle()
     rect.rotate(dotted_line.get_angle() - angle, about_point=corners[3])
 
+def ll_update_rect_rotation(rect, dotted_line):
+    corners = rect.get_anchors()
+    edges = [
+        Line(corners[i], corners[(i + 1) % 4])
+        for i in range(4)
+    ]
+
+    # Get the angle of an edge (e.g., bottom-left to top-right)
+    edge = edges[2]
+    angle = edge.get_angle()
+    rect.rotate(dotted_line.get_angle() - angle, about_point=corners[0])
+
 class trochoids(Scene):
     def construct(self):
         data = pd.read_csv('data/Fig1_RAL_Dubins_CSV/LSR.csv')
@@ -183,7 +195,6 @@ class trochoids(Scene):
             stroke_width=0,  # Remove the border
         )
         ur_background_goal = ur_background.copy()
-        
         ur_background.move_to(sgrid.get_center()+[sgrid.get_width()*.2,sgrid.get_height()*.2,0])
         ur_background.rotate(sgrid.get_axes()[0].get_angle(), about_point=ur_background.get_corner(DL))
 
@@ -194,9 +205,11 @@ class trochoids(Scene):
             fill_opacity=0.2,
             stroke_width=0,  # Remove the border
         )
+        ul_background_goal = ul_background.copy()
         ul_background.move_to(sgrid.get_center()+[-sgrid.get_width()*.2,sgrid.get_height()*.2,0])
-        pivot_corner = ul_background.get_corner(DR)
-        ul_background.rotate(sgrid.get_axes()[0].get_angle(), about_point=pivot_corner)
+        ul_background.rotate(sgrid.get_axes()[0].get_angle(), about_point=ul_background.get_corner(DR))
+
+
 
         ggrid.set_height(2).set_width(2).set_fill(WHITE, opacity=0.5)
         ggrid.set_stroke(BLACK, opacity=0.8, width=1).move_to(moved)
@@ -216,13 +229,19 @@ class trochoids(Scene):
         ur_background_goal_pivot = ur_background_goal.get_corner(DL)
         ur_background_goal.rotate(ggrid.get_axes()[0].get_angle(), about_point=ur_background_goal_pivot)
         
+        ul_background_goal.move_to(ggrid.get_center()+[-ggrid.get_width()*.2,ggrid.get_height()*.2,0])
+        ul_background_goal_pivot = ul_background_goal.get_corner(DR)
+        ul_background_goal.rotate(ggrid.get_axes()[0].get_angle(), about_point=ul_background_goal_pivot)
+        
+        
 
         self.play(ShowCreation(sgrid), 
                   ShowCreation(ggrid),
                   ShowCreation(dotted_line),
                   ShowCreation(ur_background),
                   ShowCreation(ul_background),
-                  ShowCreation(ur_background_goal))
+                  ShowCreation(ur_background_goal),
+                  ShowCreation(ul_background_goal))
         self.play(ShowCreation(arrow_line),ShowCreation(dotted_line2))
         self.play(ShowCreation(dotr1),ShowCreation(dotr2),ShowCreation(dotr3),ShowCreation(dotr4))
         dist = arrow_line.get_end() - arrow_line.get_start()
@@ -231,11 +250,14 @@ class trochoids(Scene):
         def update_rotation(number_plane):
             number_plane.rotate(dotted_line.get_angle() - number_plane.get_axes()[0].get_angle())
 
+        goal_shift = dotr1.get_center() - ur_background_goal_pivot
         self.play(ggrid.animate.move_to(dotr1), 
-                  ur_background_goal.animate.shift(dotr1.get_center() - ur_background_goal_pivot),
+                  ur_background_goal.animate.shift(goal_shift),
+                  ul_background_goal.animate.shift(goal_shift),
                   UpdateFromFunc(ur_background, lambda obj: ur_update_rect_rotation(obj, dotted_line)),
                   UpdateFromFunc(ul_background, lambda obj: ul_update_rect_rotation(obj, dotted_line)),
                   UpdateFromFunc(ur_background_goal, lambda obj: ur_update_rect_rotation(obj, dotted_line)),
+                  UpdateFromFunc(ul_background_goal, lambda obj: ul_update_rect_rotation(obj, dotted_line)),
                   UpdateFromFunc(ggrid, update_rotation),
                   UpdateFromFunc(sgrid,update_rotation), 
                   moved.animate.move_to(dotr1), 
@@ -243,9 +265,14 @@ class trochoids(Scene):
                   Transform(dotted_line,DashedLine(start,dotr1,dash_length=0.029,color=BLACK)),
                   run_time=3)
         self.wait()
-        self.play(ggrid.animate.move_to(dotr2), 
+        goal_shift = dotr2.get_center() - dotr1.get_center()
+        self.play(ggrid.animate.move_to(dotr2),
+                  ur_background_goal.animate.shift(goal_shift),
+                  ul_background_goal.animate.shift(goal_shift), 
                   UpdateFromFunc(ur_background, lambda obj: ur_update_rect_rotation(obj, dotted_line)),
                   UpdateFromFunc(ul_background, lambda obj: ul_update_rect_rotation(obj, dotted_line)),
+                  UpdateFromFunc(ur_background_goal, lambda obj: ur_update_rect_rotation(obj, dotted_line)),
+                  UpdateFromFunc(ul_background_goal, lambda obj: ul_update_rect_rotation(obj, dotted_line)),
                   UpdateFromFunc(ggrid, update_rotation),
                   UpdateFromFunc(sgrid,update_rotation), 
                   moved.animate.move_to(dotr2), 
@@ -253,9 +280,14 @@ class trochoids(Scene):
                   Transform(dotted_line,DashedLine(start,dotr2,dash_length=0.029,color=BLACK)),
                   run_time=3)
         self.wait()
-        self.play(ggrid.animate.move_to(dotr3), 
+        goal_shift = dotr3.get_center() - dotr2.get_center()
+        self.play(ggrid.animate.move_to(dotr3),
+                  ur_background_goal.animate.shift(goal_shift),
+                  ul_background_goal.animate.shift(goal_shift), 
                   UpdateFromFunc(ur_background, lambda obj: ur_update_rect_rotation(obj, dotted_line)),
                   UpdateFromFunc(ul_background, lambda obj: ul_update_rect_rotation(obj, dotted_line)),
+                  UpdateFromFunc(ur_background_goal, lambda obj: ur_update_rect_rotation(obj, dotted_line)),
+                  UpdateFromFunc(ul_background_goal, lambda obj: ul_update_rect_rotation(obj, dotted_line)),
                   UpdateFromFunc(ggrid, update_rotation),
                   UpdateFromFunc(sgrid,update_rotation), 
                   moved.animate.move_to(dotr3), 
@@ -263,9 +295,14 @@ class trochoids(Scene):
                   Transform(dotted_line,DashedLine(start,dotr3,dash_length=0.029,color=BLACK)),
                   run_time=3)
         self.wait()
-        self.play(ggrid.animate.move_to(dotr4), 
+        goal_shift = dotr4.get_center() - dotr3.get_center()
+        self.play(ggrid.animate.move_to(dotr4),
+                  ur_background_goal.animate.shift(goal_shift),
+                  ul_background_goal.animate.shift(goal_shift), 
                   UpdateFromFunc(ur_background, lambda obj: ur_update_rect_rotation(obj, dotted_line)),
                   UpdateFromFunc(ul_background, lambda obj: ul_update_rect_rotation(obj, dotted_line)),
+                  UpdateFromFunc(ur_background_goal, lambda obj: ur_update_rect_rotation(obj, dotted_line)),
+                  UpdateFromFunc(ul_background_goal, lambda obj: ul_update_rect_rotation(obj, dotted_line)),
                   UpdateFromFunc(ggrid, update_rotation),
                   UpdateFromFunc(sgrid,update_rotation), 
                   moved.animate.move_to(dotr4), 
