@@ -90,6 +90,7 @@ class trochoids(Scene):
         trochoid3.scale(0.1)
         trochoid3.shift([-11.107606,-17.1911637,0.0])
         trochoid3.rotate(PI/20.5,about_point=trochoid3.get_points()[0])
+        trochoid3_temp = copy.deepcopy(trochoid3)
 
         data5 = pd.read_csv('data/Fig1_RAL_Trochoid_CSV/RSR.csv')
         x_vals5 = data5.iloc[:,0].tolist()
@@ -399,5 +400,17 @@ class trochoids(Scene):
         a22_label.move_to((arrow_line.get_end()+dotr4.get_center())/2.0 + [0.0,0.5,0.0]) 
         self.play(Write(a22_label))
 
-        #Frame 6
-
+        self.play(Uncreate(sgrid),Uncreate(ggrid),Uncreate(ul_background),Uncreate(ll_background),Uncreate(ur_background),
+                  Uncreate(lr_background),Uncreate(ul_background_goal),Uncreate(ll_background_goal),Uncreate(ur_background_goal),
+                  Uncreate(lr_background_goal),Uncreate(dotted_line))
+        self.play(moved.animate.shift(-(dotr4.get_center() - ur_background_goal_pivot)),mvec.animate.shift(-(dotr4.get_center() - ur_background_goal_pivot)),run_time=5)
+        trochoid3_temp.rotate(-PI/9,about_point=trochoid.get_points()[0])
+        trochoid3_temp.scale(0.39)
+        (xt,yt,zt) = start.get_center()
+        (xt2,yt2,zt2) = trochoid3_temp.get_points()[0]
+        trochoid3_temp.shift([xt-xt2,yt-yt2,0.0])
+        trochoid3_temp.rotate(PI/8,about_point=trochoid3_temp.get_points()[0])
+        #trochoid3_temp.rotate()
+        goal_shift = dotr1.get_center() - ur_background_goal_pivot
+        rate_func1 = linear
+        self.play(ShowCreation(trochoid3_temp),moved.animate.shift(goal_shift),mvec.animate.shift(goal_shift),run_time=1+0.5+0.5,rate_func=lambda t: rate_func1(t * run_time2 / run_time1))
