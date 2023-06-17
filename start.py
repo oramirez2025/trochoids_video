@@ -103,7 +103,6 @@ class trochoids(Scene):
         trochoid4.rotate(PI/20.5,about_point=trochoid4.get_points()[0])
 
         start = Dot().move_to(dubins.get_points()[0])
-        start.z_index = 5
         start.set_color("#000000")
         start.set_stroke(width=1)
         slabel = Tex("Start", color=BLACK)
@@ -138,6 +137,7 @@ class trochoids(Scene):
         self.play(ShowCreation(goal), ShowCreation(gvec))
         self.play(Write(glabel))
         self.wait()
+        self.bring_to_back(dubins)
         self.play(ShowCreation(dubins))
         self.wait()
         
@@ -154,6 +154,7 @@ class trochoids(Scene):
         vector_field.set_width(40)
         vector_field.set_height(25)
         vector_field_cpy = copy.deepcopy(vector_field)
+        self.bring_to_back(vector_field)
         self.play(ShowCreation(vector_field))
 
         #Frame 3
@@ -173,8 +174,15 @@ class trochoids(Scene):
         trochoid_cpy = copy.deepcopy(trochoid)
         self.play(TransformFromCopy(goal,moved, run_time=3),TransformFromCopy(gvec, mvec,run_time=3),Transform(dubins,trochoid,run_time=3), FadeOut(glabel)) # 
         self.play(self.camera.frame.animate.move_to(trochoid.get_center()), Uncreate(goal), Uncreate(gvec), run_time=2)
+        self.bring_to_back(trochoid2)
         self.play(ShowCreation(trochoid2))
+        self.bring_to_front(trochoid4)
+        self.bring_to_front(start)
+        self.bring_to_front(moved)
         self.play(ShowCreation(trochoid4))
+        self.bring_to_front(trochoid3)
+        self.bring_to_front(start)
+        self.bring_to_front(moved)
         self.play(ShowCreation(trochoid3))
         self.wait()
 
@@ -274,11 +282,13 @@ class trochoids(Scene):
         lr_background_goal_pivot = lr_background_goal.get_corner(UL)
         lr_background_goal.rotate(ggrid.get_axes()[0].get_angle(), about_point=lr_background_goal_pivot)
         
-        
+        self.bring_to_front(moved).bring_to_front(mvec)
         self.play(ShowCreation(dotted_line2), ShowCreation(arrow_line), ShowCreation(start_line), run_time=3)
         self.wait()
+        self.bring_to_front(moved).bring_to_front(mvec)
         self.play(ShowCreation(dotted_line),run_time=2)
         self.wait()
+        self.bring_to_front(moved).bring_to_front(mvec)
         self.play(ShowCreation(sgrid), 
                     ShowCreation(ggrid),
                     ShowCreation(ur_background),
@@ -295,6 +305,12 @@ class trochoids(Scene):
             number_plane.rotate(dotted_line.get_angle() - number_plane.get_axes()[0].get_angle())
 
         goal_shift = dotr1.get_center() - ur_background_goal_pivot
+        self.bring_to_front(moved).bring_to_front(mvec)
+        self.bring_to_front(start).bring_to_front(svec)
+        self.bring_to_back(sgrid)
+        self.bring_to_back(ggrid)
+        self.bring_to_back(ur_background_goal).bring_to_back(ul_background_goal).bring_to_back(ll_background_goal).bring_to_back(lr_background_goal)
+        self.bring_to_back(ur_background).bring_to_back(ul_background).bring_to_back(ll_background).bring_to_back(lr_background)
         self.play(ggrid.animate.move_to(dotr1), 
                     ur_background_goal.animate.shift(goal_shift),
                     ul_background_goal.animate.shift(goal_shift),
@@ -323,6 +339,10 @@ class trochoids(Scene):
         self.play(Write(a44_label))
 
         goal_shift = dotr2.get_center() - dotr1.get_center()
+        self.bring_to_back(sgrid)
+        self.bring_to_back(ggrid)
+        self.bring_to_back(ur_background_goal).bring_to_back(ul_background_goal).bring_to_back(ll_background_goal).bring_to_back(lr_background_goal)
+        self.bring_to_back(ur_background).bring_to_back(ul_background).bring_to_back(ll_background).bring_to_back(lr_background)
         self.play(ggrid.animate.move_to(dotr2),
                     ur_background_goal.animate.shift(goal_shift),
                     ul_background_goal.animate.shift(goal_shift),
@@ -351,6 +371,10 @@ class trochoids(Scene):
         self.play(Write(a34_label))
 
         goal_shift = dotr3.get_center() - dotr2.get_center()
+        self.bring_to_back(sgrid)
+        self.bring_to_back(ggrid)
+        self.bring_to_back(ur_background_goal).bring_to_back(ul_background_goal).bring_to_back(ll_background_goal).bring_to_back(lr_background_goal)
+        self.bring_to_back(ur_background).bring_to_back(ul_background).bring_to_back(ll_background).bring_to_back(lr_background)
         self.play(ggrid.animate.move_to(dotr3),
                     ur_background_goal.animate.shift(goal_shift),
                     ul_background_goal.animate.shift(goal_shift), 
@@ -379,6 +403,10 @@ class trochoids(Scene):
         self.play(Write(a33_label))
 
         goal_shift = dotr4.get_center() - dotr3.get_center()
+        self.bring_to_back(sgrid)
+        self.bring_to_back(ggrid)
+        self.bring_to_back(ur_background_goal).bring_to_back(ul_background_goal).bring_to_back(ll_background_goal).bring_to_back(lr_background_goal)
+        self.bring_to_back(ur_background).bring_to_back(ul_background).bring_to_back(ll_background).bring_to_back(lr_background)
         self.play(ggrid.animate.move_to(dotr4),
                     ur_background_goal.animate.shift(goal_shift),
                     ul_background_goal.animate.shift(goal_shift), 
@@ -409,13 +437,14 @@ class trochoids(Scene):
         a22_label = Tex("a_{22}", color=BLACK).set_color_by_tex("2", '#ff931e')
         a22_label.move_to((arrow_line.get_end()+dotr4.get_center())/2.0 + [0.0,0.5,0.0]) 
         self.play(Write(a22_label))
-
+        
         self.play(Uncreate(sgrid),Uncreate(ggrid),Uncreate(ul_background),Uncreate(ll_background),Uncreate(ur_background),
                   Uncreate(lr_background),Uncreate(ul_background_goal),Uncreate(ll_background_goal),Uncreate(ur_background_goal),
                   Uncreate(lr_background_goal),Uncreate(dotted_line))
         self.play(Uncreate(sgrid),Uncreate(ggrid),Uncreate(ul_background),Uncreate(ll_background),Uncreate(ur_background),
                   Uncreate(lr_background),Uncreate(ul_background_goal),Uncreate(ll_background_goal),Uncreate(ur_background_goal),
                   Uncreate(lr_background_goal),Uncreate(dotted_line))
+        self.bring_to_front(moved).bring_to_front(mvec)
         self.play(moved.animate.shift(-(dotr4.get_center() - ur_background_goal_pivot)),mvec.animate.shift(-(dotr4.get_center() - ur_background_goal_pivot)),run_time=5)
 
         ddata = pd.read_csv('data/Fig1_RAL_Dubins_CSV/LSR.csv')
@@ -430,6 +459,14 @@ class trochoids(Scene):
         dubins2.rotate(PI/7,about_point=dubins2.get_points()[0])
         goal_shift = dotr1.get_center() - ur_background_goal_pivot
         goalLine = Line(moved,dotr1).set_color("#ff931e")
+        self.bring_to_back(arrow_line)
+        self.bring_to_front(goalLine)
+        self.bring_to_front(moved).bring_to_front(mvec)
+        self.bring_to_front(start).bring_to_front(svec)
+        self.bring_to_back(dubins2)
+        self.bring_to_back(dotr2)
+        self.bring_to_back(dotted_liner1).bring_to_back(dotted_liner2)
+        self.bring_to_back(arrow_line)
         self.play(ShowCreation(goalLine),ShowCreation(dubins2,rate_func=lambda t: 1.7*t),moved.animate.shift(goal_shift),mvec.animate.shift(goal_shift),run_time=10)
         tgoal = Tex("t_{goal} = 10","\\","s", color="#ff931e")
         tstart = Tex("t_{start} = 5.86601","\\","s", color="#3FA9F5")
