@@ -1,3 +1,4 @@
+
 from manimlib import *
 import pandas as pd
 import setuptools
@@ -58,7 +59,6 @@ class trochoids(Scene):
         points = [np.array([x,y,0.0]) for (x,y) in zip(x_vals,y_vals)]
         dubins = Line().set_points_smoothly(points).set_color("#3FA9F5")
         dubins.scale(0.1)
-        dubins.z_index = 0
 
         data2 = pd.read_csv('data/Fig1_RAL_Trochoid_CSV/LSR.csv')
         x_vals2 = data2.iloc[:,0].tolist()
@@ -109,6 +109,7 @@ class trochoids(Scene):
         slabel = Tex("Start", color=BLACK)
         slabel.next_to(start, direction=np.array([-1., 1., 0.]), buff=0.25)
         slabel.scale(1.0)
+        slabel_cpy = copy.deepcopy(slabel)
 
         goal = Dot().move_to(dubins.get_points()[-1])
         goal.set_color("#000000")
@@ -116,6 +117,7 @@ class trochoids(Scene):
         goal.set_stroke(width=1)
         glabel = Tex("Goal", color=BLACK).next_to(goal, direction=np.array([-1., 1., 0.]), buff=0.25)
         glabel.scale(1.0)
+        glabel_cpy = copy.deepcopy(glabel)
 
 
         self.camera.frame.set_width(dubins.get_width()*4)
@@ -151,6 +153,7 @@ class trochoids(Scene):
         # vector_field.scale(1/25)
         vector_field.set_width(40)
         vector_field.set_height(25)
+        vector_field_cpy = copy.deepcopy(vector_field)
         self.play(ShowCreation(vector_field))
 
         #Frame 3
@@ -163,6 +166,11 @@ class trochoids(Scene):
         mvec = Arrow(start=[x2,y2,0.0],end=[x2+0.5,y2-0.2,0.0],buff=0,stroke_color="#000000",stroke_width=3)
         mvec.set_color("#000000")
         mlabel.scale(1.0)
+        start_cpy = copy.deepcopy(start)
+        svec_cpy = copy.deepcopy(svec)
+        moved_cpy = copy.deepcopy(moved)
+        mvec_cpy = copy.deepcopy(mvec)
+        trochoid_cpy = copy.deepcopy(trochoid)
         self.play(TransformFromCopy(goal,moved, run_time=3),TransformFromCopy(gvec, mvec,run_time=3),Transform(dubins,trochoid,run_time=3), FadeOut(glabel)) # 
         self.play(self.camera.frame.animate.move_to(trochoid.get_center()), Uncreate(goal), Uncreate(gvec), run_time=2)
         self.play(ShowCreation(trochoid2))
@@ -405,12 +413,36 @@ class trochoids(Scene):
         self.play(Uncreate(sgrid),Uncreate(ggrid),Uncreate(ul_background),Uncreate(ll_background),Uncreate(ur_background),
                   Uncreate(lr_background),Uncreate(ul_background_goal),Uncreate(ll_background_goal),Uncreate(ur_background_goal),
                   Uncreate(lr_background_goal),Uncreate(dotted_line))
+        self.play(Uncreate(sgrid),Uncreate(ggrid),Uncreate(ul_background),Uncreate(ll_background),Uncreate(ur_background),
+                  Uncreate(lr_background),Uncreate(ul_background_goal),Uncreate(ll_background_goal),Uncreate(ur_background_goal),
+                  Uncreate(lr_background_goal),Uncreate(dotted_line))
         self.play(moved.animate.shift(-(dotr4.get_center() - ur_background_goal_pivot)),mvec.animate.shift(-(dotr4.get_center() - ur_background_goal_pivot)),run_time=5)
-        trochoid3_temp.rotate(-PI/9,about_point=trochoid.get_points()[0])
-        trochoid3_temp.scale(0.39)
+
+        ddata = pd.read_csv('data/Fig1_RAL_Dubins_CSV/LSR.csv')
+        dx_vals = ddata.iloc[:,0].tolist()
+        dy_vals = ddata.iloc[:,1].tolist()
+        dpoints = [np.array([x,y,0.0]) for (x,y) in zip(dx_vals,dy_vals)]
+        dubins2 = Line().set_points_smoothly(dpoints).set_color("#3FA9F5")
+        dubins2.scale(0.057)
         (xt,yt,zt) = start.get_center()
-        (xt2,yt2,zt2) = trochoid3_temp.get_points()[0]
-        trochoid3_temp.shift([xt-xt2,yt-yt2,0.0])
-        trochoid3_temp.rotate(PI/8,about_point=trochoid3_temp.get_points()[0])
+        (xt2,yt2,zt2) = dubins2.get_points()[0]
+        dubins2.shift([xt-xt2,yt-yt2,0.0])
+        dubins2.rotate(PI/7,about_point=dubins2.get_points()[0])
         goal_shift = dotr1.get_center() - ur_background_goal_pivot
-        self.play(ShowCreation(trochoid3_temp),moved.animate.shift(goal_shift),mvec.animate.shift(goal_shift),run_time=2)
+        goalLine = Line(moved,dotr1).set_color("#ff931e")
+        self.play(ShowCreation(goalLine),ShowCreation(dubins2,rate_func=lambda t: 1.7*t),moved.animate.shift(goal_shift),mvec.animate.shift(goal_shift),run_time=10)
+        tgoal = Tex("t_{goal} = 10","\\","s", color="#ff931e")
+        tstart = Tex("t_{start} = 5.86601","\\","s", color="#3FA9F5")
+        tgoal.next_to(moved, direction=np.array([0.55, 0.55, 0.]), buff=0.5)
+        dubinsPoints = dubins2.get_points()
+        tstart.next_to(dubinsPoints[int(len(dubinsPoints)/2)],direction=np.array([3, 1, 0.]),buff=0.25)
+        self.play(Write(tgoal),Write(tstart))
+        self.play(Uncreate(arrow_line),Uncreate(dotted_line2),Uncreate(dotr1),Uncreate(dotr2),Uncreate(dotr3),
+                  Uncreate(dotr4),Uncreate(a22_label),Uncreate(a33_label),Uncreate(a23_label),Uncreate(a34_label),
+                  Uncreate(a44_label),Uncreate(dotted_liner1),Uncreate(dotted_liner2),Uncreate(dotted_liner3),
+                  Uncreate(dotted_liner4),Uncreate(dotted_line2),Uncreate(start_line),Uncreate(tgoal),Uncreate(tstart),
+                  Uncreate(goalLine))
+        self.play(Transform(start,start_cpy,run_time=3),Transform(svec,svec_cpy,run_time=3),Transform(moved,moved_cpy, run_time=3),Transform(mvec, mvec_cpy,run_time=3),
+                  Transform(dubins2,trochoid_cpy,run_time=3),ShowCreation(vector_field_cpy))
+        glabel_cpy.next_to(moved.get_center(),direction=UP,buff=0.25)
+        self.play(ShowCreation(slabel_cpy),ShowCreation(glabel_cpy))
