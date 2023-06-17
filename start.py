@@ -475,13 +475,17 @@ class trochoids(Scene):
         tgoal.next_to(moved, direction=np.array([0.55, 0.55, 0.]), buff=0.5)
         dubinsPoints = dubins2.get_points()
         tstart.next_to(dubinsPoints[int(len(dubinsPoints)/2)],direction=np.array([3, 1, 0.]),buff=0.25)
-        self.play(Write(tgoal),Write(tstart))
+        self.play(Write(tstart))
+        self.wait()
+        self.play(Write(tgoal))
+        self.wait()
+        self.play(Uncreate(dubins2),Uncreate(tgoal),Uncreate(tstart))
         self.wait()
         self.play(Uncreate(arrow_line),Uncreate(dotted_line2),Uncreate(dotr1),Uncreate(dotr2),Uncreate(dotr3),
                   Uncreate(dotr4),Uncreate(a22_label),Uncreate(a33_label),Uncreate(a23_label),Uncreate(a34_label),
                   Uncreate(a44_label),Uncreate(dotted_liner1),Uncreate(dotted_liner2),Uncreate(dotted_liner3),
-                  Uncreate(dotted_liner4),Uncreate(dotted_line2),Uncreate(start_line),Uncreate(tgoal),Uncreate(tstart),
-                  Uncreate(goalLine), Uncreate(dubins2))
+                  Uncreate(dotted_liner4),Uncreate(dotted_line2),Uncreate(start_line),
+                  Uncreate(goalLine))
         self.wait()
         self.play(Transform(start,start_cpy,run_time=3),Transform(svec,svec_cpy,run_time=3),Transform(moved,moved_cpy, run_time=3),Transform(mvec, mvec_cpy,run_time=3),
                   ShowCreation(vector_field_cpy,run_time=3))
