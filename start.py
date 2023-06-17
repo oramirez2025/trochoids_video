@@ -267,10 +267,12 @@ class trochoids(Scene):
         lr_background_goal.rotate(ggrid.get_axes()[0].get_angle(), about_point=lr_background_goal_pivot)
         
         
-
+        self.play(ShowCreation(dotted_line2), ShowCreation(arrow_line), ShowCreation(start_line), run_time=3)
+        self.wait()
+        self.play(ShowCreation(dotted_line),run_time=2)
+        self.wait()
         self.play(ShowCreation(sgrid), 
                     ShowCreation(ggrid),
-                    ShowCreation(dotted_line),
                     ShowCreation(ur_background),
                     ShowCreation(ul_background),
                     ShowCreation(ll_background),
@@ -278,8 +280,8 @@ class trochoids(Scene):
                     ShowCreation(ur_background_goal),
                     ShowCreation(ul_background_goal),
                     ShowCreation(ll_background_goal),
-                    ShowCreation(lr_background_goal))
-        self.play(ShowCreation(dotted_line2), ShowCreation(arrow_line), ShowCreation(start_line))
+                    ShowCreation(lr_background_goal), run_time=3)
+        
 
         def update_rotation(number_plane):
             number_plane.rotate(dotted_line.get_angle() - number_plane.get_axes()[0].get_angle())
