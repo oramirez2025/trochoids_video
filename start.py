@@ -151,9 +151,11 @@ class trochoids(Scene):
         vector_field.move_to(dubins.get_center())
         vector_field.set_color("#7b8f92")
         # vector_field.scale(1/25)
-        vector_field.set_width(40)
+        vector_field.set_width(15)
         vector_field.set_height(25)
         vector_field_cpy = copy.deepcopy(vector_field)
+        vector_field_cpy.set_width(13)
+        vector_field_cpy.set_height(23)
         self.bring_to_back(vector_field)
         self.play(ShowCreation(vector_field))
 
@@ -458,7 +460,7 @@ class trochoids(Scene):
         dubins2.shift([xt-xt2,yt-yt2,0.0])
         dubins2.rotate(PI/7,about_point=dubins2.get_points()[0])
         goal_shift = dotr1.get_center() - ur_background_goal_pivot
-        goalLine = Line(moved,dotr1).set_color("#ff931e")
+        goalLine = Line(moved,dotr1).set_color("#666666")
         self.bring_to_back(arrow_line)
         self.bring_to_front(goalLine)
         self.bring_to_front(moved).bring_to_front(mvec)
@@ -468,18 +470,25 @@ class trochoids(Scene):
         self.bring_to_back(dotted_liner1).bring_to_back(dotted_liner2)
         self.bring_to_back(arrow_line)
         self.play(ShowCreation(goalLine),ShowCreation(dubins2,rate_func=lambda t: 1.7*t),moved.animate.shift(goal_shift),mvec.animate.shift(goal_shift),run_time=10)
-        tgoal = Tex("t_{goal} = 10","\\","s", color="#ff931e")
-        tstart = Tex("t_{start} = 5.86601","\\","s", color="#3FA9F5")
+        tgoal = Tex("t_{goal} = 10.0","\\","s", color="#666666")
+        tstart = Tex("t_{start} = 5.9","\\","s", color="#3FA9F5")
         tgoal.next_to(moved, direction=np.array([0.55, 0.55, 0.]), buff=0.5)
         dubinsPoints = dubins2.get_points()
         tstart.next_to(dubinsPoints[int(len(dubinsPoints)/2)],direction=np.array([3, 1, 0.]),buff=0.25)
         self.play(Write(tgoal),Write(tstart))
+        self.wait()
         self.play(Uncreate(arrow_line),Uncreate(dotted_line2),Uncreate(dotr1),Uncreate(dotr2),Uncreate(dotr3),
                   Uncreate(dotr4),Uncreate(a22_label),Uncreate(a33_label),Uncreate(a23_label),Uncreate(a34_label),
                   Uncreate(a44_label),Uncreate(dotted_liner1),Uncreate(dotted_liner2),Uncreate(dotted_liner3),
                   Uncreate(dotted_liner4),Uncreate(dotted_line2),Uncreate(start_line),Uncreate(tgoal),Uncreate(tstart),
-                  Uncreate(goalLine))
+                  Uncreate(goalLine), Uncreate(dubins2))
+        self.wait()
         self.play(Transform(start,start_cpy,run_time=3),Transform(svec,svec_cpy,run_time=3),Transform(moved,moved_cpy, run_time=3),Transform(mvec, mvec_cpy,run_time=3),
-                  Transform(dubins2,trochoid_cpy,run_time=3),ShowCreation(vector_field_cpy))
+                  ShowCreation(vector_field_cpy,run_time=3))
+        self.wait()
+        self.bring_to_back(trochoid_cpy)
+        self.play(ShowCreation(trochoid_cpy,run_time=3))
+        self.bring_to_back(trochoid_cpy)
         glabel_cpy.next_to(moved.get_center(),direction=UP,buff=0.25)
-        self.play(ShowCreation(slabel_cpy),ShowCreation(glabel_cpy))
+        self.play(Write(slabel_cpy),Write(glabel_cpy))
+        self.wait()
